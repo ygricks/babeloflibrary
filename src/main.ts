@@ -9,8 +9,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('parrot_test')
-    .setDescription('simple parrot test')
+    .setTitle('babeloflibrary')
+    .setDescription('babel of library')
     .setVersion('0.0.1')
     .addTag('authors')
     .build();
