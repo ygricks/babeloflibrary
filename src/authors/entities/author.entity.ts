@@ -1,9 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ObjectIdColumn, ObjectID } from 'typeorm';
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, ObjectIdColumn, ObjectID } from 'typeorm';
 
 @Entity()
 export class Author {
-//   @PrimaryGeneratedColumn()
-//   id: number;
   @ObjectIdColumn()
   _id: ObjectID;
 
