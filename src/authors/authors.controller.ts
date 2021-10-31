@@ -8,7 +8,7 @@ export class AuthorsController {
   constructor(private readonly authorsService: AuthorsService) {}
 
   @Post()
-  @UsePipes(ValidationPipe)
+  @UsePipes(new ValidationPipe({ transform: true }))
   create(@Body() createAuthorDto: CreateAuthorDto) {
     return this.authorsService.create(createAuthorDto);
   }
@@ -24,7 +24,7 @@ export class AuthorsController {
   }
 
   @Patch(':id')
-  @UsePipes(ValidationPipe)
+  @UsePipes(new ValidationPipe({ transform: true }))
   update(@Param('id') id: string, @Body() updateAuthorDto: UpdateAuthorDto) {
     return this.authorsService.update(id, updateAuthorDto);
   }

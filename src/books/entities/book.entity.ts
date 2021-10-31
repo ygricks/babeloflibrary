@@ -1,18 +1,18 @@
 import { Entity, Column, CreateDateColumn, UpdateDateColumn, ObjectIdColumn, ObjectID } from 'typeorm';
 
 @Entity()
-export class Author {
+export class Book {
   @ObjectIdColumn()
   _id: ObjectID;
 
   @Column({ length: 100 })
-  first_name: string;
+  title: string;
 
   @Column({ length: 100 })
-  last_name: string;
+  iban: string;
 
-  @Column()
-  birthday: Date;
+  @Column({type:'date'})
+  published_at: Date;
 
   @CreateDateColumn()
   created_at: Date;
