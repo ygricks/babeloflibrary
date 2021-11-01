@@ -25,12 +25,23 @@ export class AuthorsService {
   }
 
   async findOne(id: string) {
-    const _id = ObjectID(id);
+    let _id = null;
+    try{
+      _id = ObjectID(id);
+    }catch(error){
+      throw new BadRequestException("Error input data, incorect parameter id");
+    }
     return await this.authorRepository.findOne({_id})
   }
 
   async update(id: string, updateAuthorDto: UpdateAuthorDto) {
-    const _id = ObjectID(id);
+    let _id = null;
+    try{
+      _id = ObjectID(id);
+    }catch(error){
+      throw new BadRequestException("Error input data, incorect parameter id");
+    }
+
     let author = await this.authorRepository.findOne({_id});
     if(!author) {
       throw new BadRequestException("can't find the author");
@@ -40,31 +51,36 @@ export class AuthorsService {
   }
 
   async remove(id: string) {
+    let _id = null;
+    try{
+      _id = ObjectID(id);
+    }catch(error){
+      throw new BadRequestException("Error input data, incorect parameter id");
+    }
+
     const books = await this.bookRepository.find({
-      where: { 
-        author: {$eq: id}, 
-      } 
+      where: {
+        author: {$eq: _id.toString()},
+      }
     });
     if(books.length) {
-      throw new BadRequestException("At first remove book of that author");
+      throw new BadRequestException("At first, remove the author books");
     }
-    const _id = ObjectID(id);
     let deleted = await this.authorRepository.delete({_id});
     return deleted?.raw?.result;
   }
 
   async findBooks(id: string) {
-    let books = [];
+    let _id = null;
     try{
-      const _id = ObjectID(id);
-      books = await this.bookRepository.find({
-        where: {
-          author: {$eq: id},
-        }
-      });
+      _id = ObjectID(id);
     }catch(error){
-      throw new BadRequestException("Error input data, please check the author id");
+      throw new BadRequestException("Error input data, incorect parameter id");
     }
-    return books;
+    return await this.bookRepository.find({
+      where: {
+        author: {$eq: _id.toString()},
+      }
+    });
   }
 }
