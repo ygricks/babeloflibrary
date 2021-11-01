@@ -1,4 +1,11 @@
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, ObjectIdColumn, ObjectID } from 'typeorm';
+import {
+  Entity,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ObjectIdColumn,
+  ObjectID,
+} from 'typeorm';
 
 @Entity()
 export class Book {
@@ -11,7 +18,7 @@ export class Book {
   @Column({ length: 100 })
   iban: string;
 
-  @Column({type:'date'})
+  @Column({ type: 'date' })
   published_at: Date;
 
   @CreateDateColumn()

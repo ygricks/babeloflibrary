@@ -1,4 +1,11 @@
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, ObjectIdColumn, ObjectID } from 'typeorm';
+import {
+  Entity,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ObjectIdColumn,
+  ObjectID,
+} from 'typeorm';
 
 @Entity()
 export class Author {

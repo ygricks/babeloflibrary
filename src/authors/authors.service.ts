@@ -1,5 +1,5 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm'
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
 import { MongoRepository } from 'typeorm';
@@ -13,7 +13,7 @@ export class AuthorsService {
     @InjectRepository(Book)
     private readonly bookRepository: MongoRepository<Book>,
     @InjectRepository(Author)
-    private readonly authorRepository: MongoRepository<Author>
+    private readonly authorRepository: MongoRepository<Author>,
   ) {}
 
   async create(createAuthorDto: CreateAuthorDto) {
@@ -26,61 +26,61 @@ export class AuthorsService {
 
   async findOne(id: string) {
     let _id = null;
-    try{
+    try {
       _id = ObjectID(id);
-    }catch(error){
-      throw new BadRequestException("Error input data, incorect parameter id");
+    } catch (error) {
+      throw new BadRequestException('Error input data, incorect parameter id');
     }
-    return await this.authorRepository.findOne({_id})
+    return await this.authorRepository.findOne({ _id });
   }
 
   async update(id: string, updateAuthorDto: UpdateAuthorDto) {
     let _id = null;
-    try{
+    try {
       _id = ObjectID(id);
-    }catch(error){
-      throw new BadRequestException("Error input data, incorect parameter id");
+    } catch (error) {
+      throw new BadRequestException('Error input data, incorect parameter id');
     }
 
-    let author = await this.authorRepository.findOne({_id});
-    if(!author) {
+    const author = await this.authorRepository.findOne({ _id });
+    if (!author) {
       throw new BadRequestException("can't find the author");
     }
-    let updated = Object.assign(author, updateAuthorDto);
+    const updated = Object.assign(author, updateAuthorDto);
     return await this.authorRepository.save(updated);
   }
 
   async remove(id: string) {
     let _id = null;
-    try{
+    try {
       _id = ObjectID(id);
-    }catch(error){
-      throw new BadRequestException("Error input data, incorect parameter id");
+    } catch (error) {
+      throw new BadRequestException('Error input data, incorect parameter id');
     }
 
     const books = await this.bookRepository.find({
       where: {
-        author: {$eq: _id.toString()},
-      }
+        author: { $eq: _id.toString() },
+      },
     });
-    if(books.length) {
-      throw new BadRequestException("At first, remove the author books");
+    if (books.length) {
+      throw new BadRequestException('At first, remove the author books');
     }
-    let deleted = await this.authorRepository.delete({_id});
+    const deleted = await this.authorRepository.delete({ _id });
     return deleted?.raw?.result;
   }
 
   async findBooks(id: string) {
     let _id = null;
-    try{
+    try {
       _id = ObjectID(id);
-    }catch(error){
-      throw new BadRequestException("Error input data, incorect parameter id");
+    } catch (error) {
+      throw new BadRequestException('Error input data, incorect parameter id');
     }
     return await this.bookRepository.find({
       where: {
-        author: {$eq: _id.toString()},
-      }
+        author: { $eq: _id.toString() },
+      },
     });
   }
 }
