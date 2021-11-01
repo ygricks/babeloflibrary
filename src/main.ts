@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import 'dotenv/config';
-const detail = require('../package.json');
+import * as detail from '../package.json';
 
 const port = process.env.PORT;
 
