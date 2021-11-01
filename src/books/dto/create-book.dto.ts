@@ -1,6 +1,5 @@
 import { IsNotEmpty, Length, IsDate } from 'class-validator';
 import { Type } from 'class-transformer';
-import { Author } from 'src/authors/entities/author.entity';
 
 export class CreateBookDto {
     @IsNotEmpty()

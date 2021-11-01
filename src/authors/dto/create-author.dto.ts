@@ -5,7 +5,7 @@ export class CreateAuthorDto {
     @IsNotEmpty()
     @Length(3,100)
     first_name: string;
-    
+
     @IsNotEmpty()
     @Length(3,100)
     last_name: string;

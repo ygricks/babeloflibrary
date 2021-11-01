@@ -30,12 +30,12 @@ export class BooksService {
     }
 
     const book = await this.bookRepository.findOne({
-      where: { 
-        iban: {$eq: createBookDto.iban}, 
-      } 
+      where: {
+        iban: {$eq: createBookDto.iban},
+      }
     });
     if(book) {
-      throw new BadRequestException("the book with same [IBAN] already exist");
+      throw new BadRequestException("the book with same IBAN already exist");
     }
 
     return await this.bookRepository.save(createBookDto);
