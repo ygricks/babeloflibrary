@@ -23,6 +23,11 @@ export class AuthorsController {
     return this.authorsService.findOne(id);
   }
 
+  @Get('books/:id')
+  findbooks(@Param('id') id: string) {
+    return this.authorsService.findBooks(id);
+  }
+
   @Patch(':id')
   @UsePipes(new ValidationPipe({ transform: true }))
   update(@Param('id') id: string, @Body() updateAuthorDto: UpdateAuthorDto) {

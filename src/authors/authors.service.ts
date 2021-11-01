@@ -9,10 +9,6 @@ import { ObjectID } from 'mongodb';
 
 @Injectable()
 export class AuthorsService {
-  // constructor(
-  //   @InjectRepository(Author)
-  //   private readonly authorRepository: MongoRepository<Author>
-  // ) {}
   constructor(
     @InjectRepository(Book)
     private readonly bookRepository: MongoRepository<Book>,
@@ -55,5 +51,20 @@ export class AuthorsService {
     const _id = ObjectID(id);
     let deleted = await this.authorRepository.delete({_id});
     return deleted?.raw?.result;
+  }
+
+  async findBooks(id: string) {
+    let books = [];
+    try{
+      const _id = ObjectID(id);
+      books = await this.bookRepository.find({
+        where: {
+          author: {$eq: id},
+        }
+      });
+    }catch(error){
+      throw new BadRequestException("Error input data, please check the author id");
+    }
+    return books;
   }
 }
