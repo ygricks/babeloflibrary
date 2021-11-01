@@ -17,14 +17,14 @@ export class BooksService {
   ) {}
 
   async create(createBookDto: CreateBookDto) {
-    let author = null;
-
+    let _id = null;
     try {
-      const _id = ObjectID(createBookDto.author);
-      author = await this.authorRepository.findOne({ _id });
+      _id = ObjectID(createBookDto.author);
     } catch (error) {
-      author = false;
+      throw new BadRequestException('Error input data, incorect parameter id');
     }
+
+    const author = await this.authorRepository.findOne({ _id });
     if (!author) {
       throw new BadRequestException("can't find the author");
     }
@@ -46,12 +46,22 @@ export class BooksService {
   }
 
   async findOne(id: number) {
-    const _id = ObjectID(id);
+    let _id = null;
+    try {
+      _id = ObjectID(id);
+    } catch (error) {
+      throw new BadRequestException('Error input data, incorect parameter id');
+    }
     return await this.bookRepository.findOne({ _id });
   }
 
   async update(id: number, updateBookDto: UpdateBookDto) {
-    const _id = ObjectID(id);
+    let _id = null;
+    try {
+      _id = ObjectID(id);
+    } catch (error) {
+      throw new BadRequestException('Error input data, incorect parameter id');
+    }
     const book = await this.bookRepository.findOne({ _id });
     if (!book) {
       throw new BadRequestException("can't find the book");
@@ -61,7 +71,12 @@ export class BooksService {
   }
 
   async remove(id: number) {
-    const _id = ObjectID(id);
+    let _id = null;
+    try {
+      _id = ObjectID(id);
+    } catch (error) {
+      throw new BadRequestException('Error input data, incorect parameter id');
+    }
     const deleted = await this.bookRepository.delete({ _id });
     return deleted?.raw?.result;
   }
