@@ -45,7 +45,7 @@ export class BooksService {
     return await this.bookRepository.find();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     let _id = null;
     try {
       _id = ObjectID(id);
@@ -55,7 +55,7 @@ export class BooksService {
     return await this.bookRepository.findOne({ _id });
   }
 
-  async update(id: number, updateBookDto: UpdateBookDto) {
+  async update(id: string, updateBookDto: UpdateBookDto) {
     let _id = null;
     try {
       _id = ObjectID(id);
@@ -70,7 +70,7 @@ export class BooksService {
     return await this.bookRepository.save(updated);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     let _id = null;
     try {
       _id = ObjectID(id);
