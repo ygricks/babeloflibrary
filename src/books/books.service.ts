@@ -4,7 +4,7 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { MongoRepository } from 'typeorm';
 import { Book } from './entities/book.entity';
-import { Author } from 'src/authors/entities/author.entity';
+import { Author } from '../authors/entities/author.entity';
 import { ObjectID } from 'mongodb';
 
 @Injectable()
