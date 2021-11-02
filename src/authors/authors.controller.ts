@@ -34,7 +34,7 @@ export class AuthorsController {
   }
 
   @Get('books/:id')
-  findbooks(@Param('id') id: string) {
+  findBooks(@Param('id') id: string) {
     return this.authorsService.findBooks(id);
   }
 
