@@ -35,8 +35,8 @@ export class CreateBookDto {
 
   @IsNotEmpty()
   @ApiProperty({
-    description: 'Book author ID',
-    type: 'ObjectID.toString()',
+    description: 'Book author ObjectID.toString()',
+    type: 'string',
   })
   author: string;
 }

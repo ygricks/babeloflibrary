@@ -21,6 +21,9 @@ export class Book {
   @Column({ type: 'date' })
   published_at: Date;
 
+  @Column()
+  author: string;
+
   @CreateDateColumn()
   created_at: Date;
 
