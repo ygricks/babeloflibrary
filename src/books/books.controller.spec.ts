@@ -13,7 +13,7 @@ describe('BooksController', () => {
       };
     }),
     findOne: jest.fn((_id) => {
-      return new Object();
+      return _id ? new Object() : false;
     }),
     update: jest.fn((id, dto) => {
       return {
@@ -25,7 +25,8 @@ describe('BooksController', () => {
       return [];
     }),
     remove: jest.fn((_id) => {
-      return Math.floor(Math.random() * 10) % 2 == 0;
+      const rand = Math.random() < 0.5;
+      return _id ? rand : false;
     }),
   };
 

@@ -1,4 +1,3 @@
-import { Controller } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthorsController } from './authors.controller';
 import { AuthorsService } from './authors.service';
@@ -23,13 +22,14 @@ describe('AuthorsController', () => {
       return [];
     }),
     findBooks: jest.fn((_id) => {
-      return [];
+      return _id ? [] : false;
     }),
     findOne: jest.fn((_id) => {
-      return new Object();
+      return _id ? new Object() : false;
     }),
     remove: jest.fn((_id) => {
-      return Math.floor(Math.random() * 10) % 2 == 0;
+      const rand = Math.random() < 0.5;
+      return _id ? rand : false;
     }),
   };
 

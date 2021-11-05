@@ -24,12 +24,12 @@ describe('AuthorsService', () => {
     find: jest.fn().mockImplementation(() => {
       return Promise.resolve([]);
     }),
-    findOne: jest.fn().mockImplementation((__id) => {
-      return Promise.resolve(Object.assign(new Author(), dto));
+    findOne: jest.fn().mockImplementation((_id) => {
+      return Promise.resolve(_id ? Object.assign(new Author(), dto) : false);
     }),
     delete: jest.fn().mockImplementation((_id) => {
       const message = new Object({ raw: { result: { rm: 1, do: 1 } } });
-      return Promise.resolve(message);
+      return Promise.resolve(_id ? message : false);
     }),
   };
   const mockBookProvider = {
@@ -68,7 +68,6 @@ describe('AuthorsService', () => {
   });
 
   it('should return all Authors', async () => {
-    const a = await service.findAll();
     expect(await service.findAll()).toEqual(expect.any(Array));
   });
 
