@@ -24,8 +24,12 @@ describe('BooksService', () => {
     find: jest.fn().mockImplementation(() => {
       return Promise.resolve([]);
     }),
-    findOne: jest.fn().mockImplementation((...params) => {
-      return Promise.resolve(params ? Object.assign(new Book(), dto) : false);
+    findOne: jest.fn().mockImplementation((params) => {
+      /* 'where'-clause used find book with same IBAN*unique, see books.service:create, false for pass */
+      const response = params.hasOwnProperty('where')
+        ? false
+        : Object.assign(new Book(), dto);
+      return Promise.resolve(response);
     }),
     delete: jest.fn().mockImplementation((_id) => {
       const message = new Object({ raw: { result: { rm: 1, do: 1 } } });
@@ -66,12 +70,12 @@ describe('BooksService', () => {
     expect(service).toBeDefined();
   });
 
-  // it('should create and return Book record', async () => {
-  //   expect(await service.create(dto)).toEqual({
-  //     _id: expect.any(ObjectID),
-  //     ...dto,
-  //   });
-  // });
+  it('should create and return Book record', async () => {
+    expect(await service.create(dto)).toEqual({
+      _id: expect.any(ObjectID),
+      ...dto,
+    });
+  });
 
   it('should return all Books', async () => {
     expect(await service.findAll()).toEqual(expect.any(Array));
