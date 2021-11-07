@@ -27,16 +27,24 @@ describe('Book Controller (e2e)', () => {
         ...book,
       }),
     ),
-    findOne: jest.fn().mockImplementation((_id) =>
-      Promise.resolve(
-        _id
-          ? {
-              ...dto,
-              _id: '6181c1055738e7daf06d05ce',
-            }
-          : false,
-      ),
-    ),
+    findOne: jest.fn().mockImplementation((params) => {
+      /* 'where'-clause used find book with same IBAN*unique, see books.service:create, false for pass */
+      console.debug(params);
+      const response = params.hasOwnProperty('where')
+        ? false //{ ...dto, _id: '6181c1055738e7daf06d05ce' }
+        : { ...dto, _id: '6181c1055738e7daf06d05ce' };
+      return Promise.resolve(response);
+    }),
+    // findOne: jest.fn().mockImplementation((_id) =>
+    //   Promise.resolve(
+    //     _id
+    //       ? {
+    //           ...dto,
+    //           _id: '6181c1055738e7daf06d05ce',
+    //         }
+    //       : false,
+    //   ),
+    // ),
     delete: jest.fn().mockImplementation((_id) => {
       const message = new Object({ raw: { result: { rm: 1, do: 1 } } });
       return Promise.resolve(_id ? message : false);
@@ -93,6 +101,20 @@ describe('Book Controller (e2e)', () => {
       .send(changes)
       .expect(200)
       .expect(wait_book);
+  });
+
+  it('/books (POST)', () => {
+    return request(app.getHttpServer())
+      .post('/books')
+      .send(dto)
+      .expect('Content-Type', /json/)
+      .expect(201)
+      .then((response) => {
+        expect(response.body).toEqual({
+          _id: expect.any(String),
+          ...dto,
+        });
+      });
   });
 
   it('/books (POST) --> fail 400', () => {
